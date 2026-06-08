@@ -1,0 +1,16 @@
+check,count
+raw_rows_after_duplicates_removed,1033036
+missing_customer_id,235151
+missing_invoice_date,0
+missing_quantity,0
+missing_unit_price,0
+cancelled_invoices,19104
+negative_or_zero_quantity,22496
+negative_or_zero_price,6019
+returns_cancellations_rows,18390
+customers_with_returns_cancellations,2572
+cleaned_sales_rows,779425
+cleaned_unique_customers,5878
+cleaned_total_revenue,17374804.268
+cleaned_start_date,2009-12-01 07:45:00
+cleaned_end_date,2011-12-09 12:50:00

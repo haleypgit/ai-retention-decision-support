@@ -1,0 +1,25 @@
+# Do not commit docs
+docs/
+
+# Do not commit raw data
+data/raw/
+
+# Do not commit large processed CSV files
+data/processed/*.csv
+
+# But keep the small cleaning summary if you want
+!data/processed/data_cleaning_summary.csv
+
+# Jupyter/Python temporary files
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+.venv/
+venv/
+
+# System files
+.DS_Store
+Thumbs.db
