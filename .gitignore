@@ -1,25 +1,58 @@
+# =========================
+# Project folders to ignore
+# =========================
+
 # Do not commit docs
 docs/
 
-# Do not commit raw data
-data/raw/
+# Do not commit raw dataset files
+data/raw/*
+!data/raw/.gitkeep
 
-# Do not commit large processed CSV files
+# Do not commit generated processed CSV files
 data/processed/*.csv
+data/processed/*.json
 
-# But keep the small cleaning summary if you want
+# Keep small cleaning summary file
 !data/processed/data_cleaning_summary.csv
 
-# Jupyter/Python temporary files
+# Do not commit EDA generated summary tables
+data/processed/eda_summary_tables/
+
+# Keep processed folder structure if needed
+!data/processed/.gitkeep
+
+# =========================
+# MLflow / model artifacts
+# =========================
+
+mlruns/
+models/mlruns/
+models/*.pkl
+models/*.joblib
+models/*.pickle
+
+# =========================
+# Jupyter / Python
+# =========================
+
 .ipynb_checkpoints/
+**/.ipynb_checkpoints/
 __pycache__/
 *.pyc
 
-# Environment files
+# =========================
+# Environment / secrets
+# =========================
+
 .env
+.env.*
 .venv/
 venv/
 
+# =========================
 # System files
+# =========================
+
 .DS_Store
 Thumbs.db
