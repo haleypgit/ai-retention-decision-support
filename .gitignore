@@ -9,14 +9,14 @@ docs/
 data/raw/*
 !data/raw/.gitkeep
 
-# Do not commit generated processed CSV files
+# Do not commit generated processed files
 data/processed/*.csv
 data/processed/*.json
 
-# Keep small cleaning summary file
+# Keep small cleaning summary file only
 !data/processed/data_cleaning_summary.csv
 
-# Do not commit EDA generated summary tables
+# Do not commit generated summary folders
 data/processed/eda_summary_tables/
 
 # Keep processed folder structure if needed
@@ -31,6 +31,13 @@ models/mlruns/
 models/*.pkl
 models/*.joblib
 models/*.pickle
+
+# =========================
+# Streamlit secrets / API keys
+# =========================
+
+.streamlit/secrets.toml
+dashboard/.streamlit/secrets.toml
 
 # =========================
 # Jupyter / Python
