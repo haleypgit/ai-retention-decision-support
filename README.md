@@ -1,12 +1,14 @@
 # AI-Powered Customer Retention Decision Support System for E-Commerce
 
-This project is a customer retention decision-support system that predicts customer inactivity, explains risk drivers, segments customers, recommends marketing actions, and provides an interactive Streamlit dashboard with an optional AI advisor.
+A practical, end-to-end system for predicting customer inactivity, understanding risk drivers, segmenting customers, and recommending targeted marketing actions — all delivered through an interactive Streamlit dashboard with an optional AI advisor.
 
-The goal is to help business users answer:
+### What this project helps you answer
 
 * Which customers are at risk of becoming inactive?
 * Why are they at risk?
 * What marketing action should be taken next?
+
+---
 
 ## How to Use This Project
 
@@ -36,11 +38,9 @@ Place the raw dataset here:
 data/raw/online_retail_II.csv
 ```
 
-The raw dataset is not included in this repository because of file size and reproducibility considerations.
+Note: The dataset is not included in this repository due to size and reproducibility considerations.
 
-### 4. Run the Notebooks in Order
-
-Run the notebooks in this sequence:
+### 4. Run the Notebooks (in order)
 
 ```text
 01_data_cleaning.ipynb
@@ -53,72 +53,67 @@ Run the notebooks in this sequence:
 08_retention_recommendations.ipynb
 ```
 
-Some notebooks include run/save control flags so generated outputs are not recreated unless the flag is changed to `True`.
+Some notebooks include run/save flags to avoid regenerating outputs unless explicitly enabled.
 
 ### 5. Launch the Dashboard
-
-After running the notebooks and generating the processed files, start the Streamlit dashboard:
 
 ```bash
 streamlit run dashboard/app.py
 ```
 
-If Streamlit is not recognized, use:
+If needed:
 
 ```bash
 python -m streamlit run dashboard/app.py
 ```
 
-The dashboard usually opens at:
+Open in browser:
 
 ```text
 http://localhost:8501
 ```
 
+---
+
 ## Dashboard Features
 
-The dashboard is designed as a marketing analytics tool for customer retention.
+A business-focused interface for customer retention analysis.
 
 ### Executive Overview
 
-Shows high-level retention KPIs:
+High-level KPIs:
 
 * Total customers
 * Predicted at-risk customers
 * High-risk customers
 * Average inactivity risk
 
-Users can filter by customer segment, risk tier, and minimum inactivity probability.
+Includes filters for segment, risk tier, and probability threshold.
 
 ### Customer Lookup
 
-Allows users to search for a specific customer ID and view:
+Search by customer ID to view:
 
-* Customer segment
-* Risk tier
-* Predicted inactivity probability
-* Recency
-* Frequency
-* Monetary value
-* Behavioral risk drivers
+* Segment and risk tier
+* Inactivity probability
+* Recency, frequency, monetary value
+* Risk drivers
 * Recommended marketing action
-* Subject line, preheader, CTA, cadence, and KPI
+* Campaign details (subject line, CTA, cadence, KPI)
 
 ### Manual Prediction
 
-Allows users to enter customer attributes and generate a new inactivity prediction.
-
-This is useful for testing customer scenarios or scoring customers that are not already in the dataset.
+Input customer attributes to generate a new inactivity prediction.
+Useful for testing scenarios or scoring new customers.
 
 ### Marketing Actions
 
 Summarizes recommended campaigns and target audiences.
-
-Customers are ranked using a campaign priority score that combines predicted inactivity risk and customer value.
+Customers are ranked using a priority score combining risk and value.
 
 ### Segments
 
-Shows customer segment size and inactivity rate by segment.
+Displays segment size and inactivity rate.
 
 Segments include:
 
@@ -131,59 +126,72 @@ Segments include:
 
 ### Model & Explainability
 
-Displays model performance and feature importance to explain what drives inactivity predictions.
+Shows model performance and feature importance to explain predictions.
 
 ### AI Advisor
 
-The AI Advisor allows users to ask business questions such as:
+Ask business questions such as:
 
 * Why is this customer at risk?
 * What offer should we send?
-* Write a marketing message for this customer.
-* Which campaign audience should be prioritized?
+* Write a marketing message
+* Which audience should we prioritize?
 
-The advisor uses model scores, customer segment, risk drivers, and retention recommendation context. It includes a local rule-based fallback and can optionally use the OpenAI API if an API key is provided.
+Supports both:
+
+* Local rule-based responses
+* Optional OpenAI-powered responses
+
+---
 
 ## Optional: OpenAI Advisor Setup
 
-The dashboard can run without an OpenAI API key using the local advisor mode.
+The dashboard works without an API key (local mode).
 
-To enable the OpenAI-powered advisor, set your API key as an environment variable.
+To enable OpenAI:
 
-PowerShell:
+**PowerShell**
 
 ```powershell
 $env:OPENAI_API_KEY="your_api_key_here"
 ```
 
-Mac/Linux:
+**Mac/Linux**
 
 ```bash
 export OPENAI_API_KEY="your_api_key_here"
 ```
 
-Do not commit API keys, `.env` files, or Streamlit secrets to GitHub.
+Do not commit API keys or `.env` files.
+
+---
 
 ## Project Overview
 
-Customer retention is a major challenge for e-commerce businesses. Many companies have historical transaction data, but they may not know which customers are becoming inactive, what behaviors are driving the risk, or how marketing teams should respond.
+Customer retention is a key challenge in e-commerce. While companies collect transaction data, they often lack clear insights into:
 
-This project uses the Online Retail II dataset to build a decision-support system that turns transaction data into:
+* Which customers are becoming inactive
+* What behaviors drive risk
+* How marketing teams should respond
+
+This project converts raw transaction data into:
 
 * Customer-level features
 * 90-day inactivity predictions
-* Explainable churn-risk drivers
+* Explainable risk drivers
 * Customer segments
 * Marketing recommendations
-* Dashboard-based decision support
+* Interactive decision support
+
+---
 
 ## Dataset
 
-The project uses transaction-level e-commerce data from the Online Retail II dataset.
+Based on the **Online Retail II** dataset.
 
-The raw data includes:
+Includes:
 
-* Invoice information
+* Invoice data
 * Product details
 * Quantity
 * Invoice date
@@ -191,44 +199,47 @@ The raw data includes:
 * Customer ID
 * Country
 
-Because the dataset does not include a churn label, inactivity was defined behaviorally.
+### Target Definition
 
-A customer is labeled as inactive if they do not make another purchase within the next 90 days after the cutoff date.
+Since no churn label exists, inactivity is defined behaviorally:
 
 ```text
-inactive_90d = 1 → no repeat purchase in next 90 days
-inactive_90d = 0 → repeat purchase in next 90 days
+inactive_90d = 1 → no purchase in next 90 days
+inactive_90d = 0 → purchase within next 90 days
 ```
+
+---
 
 ## Key Results
 
-After cleaning and preparing the data:
+### Data Summary
 
-* Cleaned sales transactions: **779,425**
+* Cleaned transactions: **779,425**
 * Unique customers: **5,878**
 * Modeling customers: **5,281**
-* 90-day inactive customers: **2,989**
-* 90-day active customers: **2,292**
+* Inactive customers: **2,989**
+* Active customers: **2,292**
 * Inactive rate: **56.6%**
-* Active rate: **43.4%**
 
-Modeling results:
+### Model Performance
 
 * Best model: **Gradient Boosting**
 * ROC-AUC: **0.8154**
-* Selected threshold: **0.40**
-* Tuned recall: **90.8%**
-* Tuned precision: **70.5%**
-* Tuned F1-score: **0.7937**
+* Threshold: **0.40**
+* Recall: **90.8%**
+* Precision: **70.5%**
+* F1-score: **0.7937**
 
-Top model drivers:
+### Top Drivers
 
 1. Recency
 2. Frequency
 3. Monetary value
-4. Product diversity / description diversity
+4. Product diversity
 5. Total quantity
 6. Customer lifetime
+
+---
 
 ## Project Workflow
 
@@ -237,24 +248,26 @@ Raw Transactions
       ↓
 Data Cleaning
       ↓
-Customer-Level Feature Engineering
+Feature Engineering
       ↓
-90-Day Inactivity Label Creation
+Inactivity Labeling
       ↓
-Exploratory Data Analysis
+EDA
       ↓
-Predictive Modeling + MLflow Tracking
+Modeling + MLflow
       ↓
 Threshold Tuning
       ↓
 Explainability
       ↓
-Customer Segmentation
+Segmentation
       ↓
-Retention Recommendations
+Recommendations
       ↓
-Streamlit Dashboard + AI Advisor
+Dashboard + AI Advisor
 ```
+
+---
 
 ## Repository Structure
 
@@ -266,162 +279,102 @@ ai-retention-decision-support/
 │
 ├── data/
 │   ├── raw/
-│   │   └── .gitkeep
 │   └── processed/
-│       └── .gitkeep
 │
 ├── models/
-│
 ├── notebooks/
-│   ├── 01_data_cleaning.ipynb
-│   ├── 02_customer_features.ipynb
-│   ├── 03_churn_label.ipynb
-│   ├── 04_eda.ipynb
-│   ├── 05_modeling_mlflow.ipynb
-│   ├── 06_segmentation.ipynb
-│   ├── 07_explainability.ipynb
-│   └── 08_retention_recommendations.ipynb
-│
 ├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
 
-Generated datasets, raw data files, MLflow logs, model artifacts, and API keys are intentionally excluded from GitHub.
+Generated files (data, models, MLflow logs) are excluded.
 
-## Notebook Descriptions
+---
+
+## Notebook Overview
 
 ### 01_data_cleaning.ipynb
 
-Cleans the raw Online Retail II transaction data.
-
-Main tasks include:
-
-* Removing duplicate records
-* Handling missing customer IDs
-* Separating cancellations and returns
-* Removing invalid transactions
-* Creating cleaned transaction outputs
+* Removes duplicates
+* Handles missing IDs
+* Filters invalid transactions
 
 ### 02_customer_features.ipynb
 
-Transforms transaction-level data into customer-level features, including:
-
-* Recency
-* Frequency
-* Monetary value
-* Average order value
-* Product diversity
-* Customer lifetime
-* Return and cancellation behavior
+* Builds RFM features
+* Adds behavioral metrics
 
 ### 03_churn_label.ipynb
 
-Creates the 90-day inactivity target label.
-
-Historical transactions are used to build customer features, while future transactions are used only to define whether the customer became inactive.
+* Creates 90-day inactivity label
 
 ### 04_eda.ipynb
 
-Explores behavioral differences between active and inactive customers.
-
-Key findings:
-
-* Inactive customers generally have higher recency.
-* Inactive customers tend to have lower frequency.
-* Inactive customers tend to have lower monetary value.
-* Inactive customers often have lower product diversity and shorter customer lifetime.
+* Compares active vs inactive customers
 
 ### 05_modeling_mlflow.ipynb
 
-Trains and compares multiple classification models:
-
-* Logistic Regression
-* Decision Tree
-* Random Forest
-* Extra Trees
-* Gradient Boosting
-* Hist Gradient Boosting
-* XGBoost
-
-The notebook also logs model runs and metrics using MLflow.
-
-Because customer retention prioritizes identifying at-risk customers, the final model threshold was tuned from the default 0.50 to 0.40 to improve recall.
+* Trains multiple models
+* Tracks experiments with MLflow
+* Tunes threshold for recall
 
 ### 06_segmentation.ipynb
 
-Creates business-friendly customer segments using RFM-style rules.
+* Creates business-friendly segments
 
 ### 07_explainability.ipynb
 
-Explains the final model using:
-
 * Feature importance
 * SHAP workflow
-* Customer-level risk driver logic
-
-The strongest driver of inactivity was recency, followed by frequency and monetary value.
+* Risk driver logic
 
 ### 08_retention_recommendations.ipynb
 
-Maps model predictions and customer segments into marketing actions.
+* Maps predictions to marketing actions
 
-Outputs include:
-
-* Recommended action
-* Offer level
-* Campaign objective
-* Subject line
-* Preheader
-* CTA
-* Cadence
-* Primary KPI
-* Campaign priority score
+---
 
 ## MLflow Tracking
-
-Model training runs are logged locally with MLflow.
-
-To view the MLflow UI:
 
 ```bash
 mlflow ui --backend-store-uri models/mlruns
 ```
 
-Then open:
+Open:
 
 ```text
 http://127.0.0.1:5000
 ```
 
-MLflow logs are excluded from GitHub because they are generated artifacts.
+---
 
 ## Reproducibility Notes
 
-The repository excludes:
+Excluded from GitHub:
 
-* Raw data files
-* Processed CSV files
+* Raw data
+* Processed data
 * MLflow logs
 * Model artifacts
-* API keys and secrets
+* API keys
 
-This keeps the repository lightweight and avoids uploading large or sensitive files. All generated files can be recreated by running the notebooks in order.
+All outputs can be regenerated by running the notebooks.
+
+---
 
 ## Tools Used
 
 * Python
-* pandas
-* numpy
-* scikit-learn
-* XGBoost
+* pandas, numpy
+* scikit-learn, XGBoost
 * SHAP
 * MLflow
 * Streamlit
-* Plotly
-* Matplotlib
-* OpenAI API optional
-* GitHub
+* Plotly, Matplotlib
+* OpenAI API (optional)
+
+---
 
 ## Author
 
